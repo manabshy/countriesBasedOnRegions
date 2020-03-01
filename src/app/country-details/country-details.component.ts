@@ -8,9 +8,6 @@ import { Component, OnInit , Input} from '@angular/core';
 export class CountryDetailsComponent implements OnInit {
   @Input() countryDetails = {};
   constructor() { }
-
   ngOnInit() {
-    console.log(this.countryDetails);
   }
-
 }

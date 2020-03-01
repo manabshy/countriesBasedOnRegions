@@ -1,1 +1,22 @@
-<p>country-details works!</p>
+<div class="table-responsive">
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Capital</th>
+        <th>Population</th>
+        <th>Currencies</th>
+        <th>Flag</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="countryDetails">
+        <td>{{ countryDetails.name }}</td>
+        <td>{{ countryDetails.capital }}</td>
+        <td>{{ countryDetails.population }}</td>
+        <td>{{ countryDetails.currencies[0].name}}</td>
+        <td>{{ countryDetails.flag }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

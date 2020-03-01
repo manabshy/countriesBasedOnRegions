@@ -7,21 +7,25 @@ import { catchError } from 'rxjs/operators';
 @Component({
   selector: 'app-regions',
   templateUrl: './regions.component.html',
-  styleUrls: ['./regions.component.sass']
+  styleUrls: ['./regions.component.css']
 })
 export class RegionsComponent implements OnInit {
   regions = [{name: 'europe', id: 1}, {name: 'asia', id: 2}];
   errorMessage = '';
-  countries$: Observable<Country[]>
+  countries = [];
+  countryDetails;
 
   constructor(private service: CountriesService) { }
   ngOnInit() {
   }
-  public onSelected(event) {
-    this.service.getCountriesByRegion(event).subscribe(
+  public onSelected(region) {
+    this.service.getCountriesByRegion(region).subscribe(
       res => {
-        this.countries$ = res;
+        this.countries = res;
       }
     );
+  }
+  public onSelectedCountry(country) {
+   this.countryDetails = this.countries.find(c => c.name === country);
   }
 }

@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Input} from '@angular/core';
 
 @Component({
   selector: 'app-country-details',
   templateUrl: './country-details.component.html',
-  styleUrls: ['./country-details.component.sass']
+  styleUrls: ['./country-details.component.css']
 })
 export class CountryDetailsComponent implements OnInit {
-
+  @Input() countryDetails = {};
   constructor() { }
 
   ngOnInit() {
+    console.log(this.countryDetails);
   }
 
 }

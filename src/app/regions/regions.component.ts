@@ -5,6 +5,7 @@ import { Country } from './country';
 import { catchError } from 'rxjs/operators';
 import * as fromRegions from '../state';
 import * as regionsActions from '../state/regions/regions.action';
+import * as countryActions from '../state/countries/countries.action';
 
 import { Store, select } from '@ngrx/store';
 
@@ -30,11 +31,12 @@ export class RegionsComponent implements OnInit {
       });
   }
   public onSelected(region) {
-    this.service.getCountriesByRegion(region).subscribe(
-      res => {
-        this.countries = res;
+    this.store.dispatch(new countryActions.GetCountries(region));
+    this.store.pipe(select(fromRegions.getCountries)).subscribe(
+      countries => {
+        this.countries = countries;
       }
-    );
+    )
   }
   public onSelectedCountry(country) {
    this.countryDetails = this.countries.find(c => c.name === country);

@@ -12,6 +12,7 @@ describe('RegionsComponent', () => {
   let fixture: ComponentFixture<RegionsComponent>;
   let store;
   const regions = [{name: 'asia', id: 1}, { name: 'europe', id: 2}];
+  const countries = [{name: 'india', id: 1}, {name: 'china', id: 2}];
   beforeEach(async(() => {
     store = jasmine.createSpyObj(['dispatch', 'pipe', 'subscribe']);
 
@@ -23,6 +24,8 @@ describe('RegionsComponent', () => {
         provideMockStore({
           selectors: [
             { selector: fromState.getRegions, value: regions },
+            { selector: fromState.getCountries, value: countries },
+
           ],
         }),
       ]
@@ -43,4 +46,14 @@ describe('RegionsComponent', () => {
   it('should able to get the regions from state', () => {
     expect(component.regions.length).toBe(2);
   })
+  it('should able to get the list of countries by region name', () => {
+    component.onSelected('asia');
+    expect(component.countries.length).toBe(2);
+  });
+  it('should able to get the selected country details', () => {
+    component.countries = countries;
+    component.onSelectedCountry('india');
+    expect(component.countryDetails).toBeDefined();
+  });
+
 });

@@ -3,6 +3,10 @@ import { CountriesService } from '../countries.service';
 import { Observable, EMPTY } from 'rxjs';
 import { Country } from './country';
 import { catchError } from 'rxjs/operators';
+import * as fromRegions from '../state';
+import * as regionsActions from '../state/regions/regions.action';
+
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-regions',
@@ -10,13 +14,20 @@ import { catchError } from 'rxjs/operators';
   styleUrls: ['./regions.component.css']
 })
 export class RegionsComponent implements OnInit {
-  regions = [{name: 'europe', id: 1}, {name: 'asia', id: 2}];
   errorMessage = '';
   countries = [];
   countryDetails;
+  regions;
 
-  constructor(private service: CountriesService) { }
+  constructor(private service: CountriesService,
+              private store: Store<fromRegions.State>,
+    ) { }
   ngOnInit() {
+    this.store.dispatch(new regionsActions.Load());
+    this.store.pipe(select(fromRegions.getRegions)).subscribe(
+      regions => {
+        this.regions = regions;
+      });
   }
   public onSelected(region) {
     this.service.getCountriesByRegion(region).subscribe(

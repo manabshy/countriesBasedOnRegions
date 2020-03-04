@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.12  and latest [Angular version 9], [NgRx version 8.6.0], [Bootstrap ]
 
-## To Installation instructions
+## Installation instructions
 npm i 
 
 ## To Start the Application

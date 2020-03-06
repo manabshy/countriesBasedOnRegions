@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-6">
         <label>Regions</label>
-        <select class="form-control" (change)="onSelected($event.target.value)">
+        <select class="form-control" (change)="onSelected($event.target.value)" *ngIf="regions$ | async as regions">
           <option value="0">- Display All -</option>
           <option *ngFor="let region of regions" [value]="region.name">{{
             region.name
@@ -13,7 +13,7 @@
     </div>
 
     <div class="row justify-content-between">
-      <div class="col-6">
+      <div class="col-6" *ngIf="countries$| async as countries">
         <label>Countries</label>
         <select class="form-control" (change)="onSelectedCountry($event.target.value)">
           <option value="0">- Display All -</option>

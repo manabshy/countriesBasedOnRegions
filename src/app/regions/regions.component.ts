@@ -19,26 +19,28 @@ export class RegionsComponent implements OnInit {
   countries = [];
   countryDetails;
   regions;
-
+  regions$:Observable<any>;
+  countries$: Observable<any>;
   constructor(private service: CountriesService,
               private store: Store<fromRegions.State>,
     ) { }
   ngOnInit() {
     this.store.dispatch(new regionsActions.Load());
-    this.store.pipe(select(fromRegions.getRegions)).subscribe(
-      regions => {
-        this.regions = regions;
-      });
+    this.regions$ = this.store.pipe(select(fromRegions.getRegions)).pipe(
+      catchError(err => {
+        this.errorMessage = err;
+        return  EMPTY;
+      })
+    );
   }
   public onSelected(region) {
     this.store.dispatch(new countryActions.GetCountries(region));
-    this.store.pipe(select(fromRegions.getCountries)).subscribe(
-      countries => {
-        this.countries = countries;
-      }
-    )
+    this.countries$ = this.store.pipe(select(fromRegions.getCountries));
   }
   public onSelectedCountry(country) {
-   this.countryDetails = this.countries.find(c => c.name === country);
+   this.countries$.subscribe(
+     res =>
+       this.countryDetails = res.find(c => c.name === country)
+   );
   }
 }
